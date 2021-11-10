@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <div class="page-header mb-5">
+        <h1>Accueil</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-12 mb-4">
+            Lancez cette commande pour charger les données fictives de l'application : <br/>
+            <code class="console">$ php bin/console doctrine:fixtures:load</code>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="jumbotron border border-primary p-5">
+                <p>
+                    Parcourir la <strong>section publique</strong> de l'application.
+                </p>
+                <p>
+                    <a class="btn btn-outline-primary btn-lg" href="{{ path('movie_index') }}">
+                        <i class="fa fa-users" aria-hidden="true"></i> Naviguer sur l'application
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="jumbotron border border-primary p-5">
+                <p>
+                    Parcourir l'<strong>interface d'administration</strong> de l'application.
+                </p>
+                <p>
+                    <a class="btn btn-primary btn-lg" href="{{ path('admin_index') }}">
+                        <i class="fa fa-lock" aria-hidden="true"></i> Naviguer sur l'administration
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

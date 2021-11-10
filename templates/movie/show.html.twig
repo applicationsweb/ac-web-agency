@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du film{% endblock %}
+
+{% block body %}
+<h1 class="text-center mb-3">{{ movie.name }}</h1>
+
+<div class="d-flex justify-content-evenly fw-bold">
+    <div class="p-2">{% for k in movie.kinds %}{{ k.name }}{% if not loop.last %} - {% endif %}{% endfor %}</div>
+    <div class="p-2">{{ movie.author.email }}</div>
+    <div class="p-2">{{ movie.created|date('d/m/Y H:i:s') }}</div>
+</div>
+
+<div class="text-center mb-5">
+    <img src="{{ movie.image }}" alt="{{ movie.name }}" class="img-fluid">
+</div>
+
+<h2 class="text-center mb-3">Liste des commentaires</h2>
+{{ form_start(form, {method: 'POST', action: path('movie_show', {'slug': movie.slug})}) }}
+    <fieldset>
+        <legend>
+            <i class="fa fa-comment" aria-hidden="true"></i> Ajouter un commentaire
+        </legend>
+
+        {{ form_errors(form) }}
+
+        <div class="form-group {% if not form.content.vars.valid %}has-error{% endif %}">
+            {{ form_label(form.content, 'Contenu du commentaire', {label_attr: {class: 'sr-only'}}) }}
+
+            {{ form_errors(form.content) }}
+
+            {{ form_widget(form.content, {attr: {rows: 5}}) }}
+            {{ form_help(form.content) }}
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-primary float-end" type="submit">Valider</button>
+        </div>
+    </fieldset>
+{{ form_end(form) }}
+
+<hr>
+{% for c in movie.comments %}
+    <div class="card m-4 p-2">
+        <div class="d-flex justify-content-between">
+            <div class="p-2 fw-bold">{{ c.author.email }}</div>
+            <div class="p-2 fw-light fst-italic">{{ c.created|date('d/m/Y H:i:s') }}</div>
+        </div>
+        <p class="text-muted">{{ c.content }}</p>
+    </div>
+{% else %}
+    Aucun commentaire
+{% endfor %}
+{% endblock %}

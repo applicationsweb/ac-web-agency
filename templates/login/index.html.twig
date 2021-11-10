@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+    {% if error %}
+        <div class="alert alert-danger">
+            {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-sm-5">
+            <div class="well">
+                <form action="{{ path('login') }}" method="post">
+                    <fieldset>
+                        <legend><i class="fa fa-lock" aria-hidden="true"></i> Connexion sécurisée</legend>
+                        <div class="form-group">
+                            <label for="username">Email</label>
+                            <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Mot de passe</label>
+                            <input type="password" id="password" name="_password" class="form-control" />
+                        </div>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+                        <button type="submit" class="btn btn-primary mt-2">
+                            <i class="fa fa-sign-in" aria-hidden="true"></i> Connectez-vous
+                        </button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+
+        <div id="login-help" class="col-sm-7">
+            <h3>
+                <i class="hidden-xs fa fa-long-arrow-left" aria-hidden="true"></i>
+                Essayez l'un des utilisateurs suivants
+            </h3>
+
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Email</th>
+                        <th scope="col">Password</th>
+                        <th scope="col">Rôle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>usr1@gmail.com</td>
+                        <td>User,123456</td>
+                        <td><code>ROLE_USER</code> (utilisateur)</td>
+                    </tr>
+                    <tr>
+                        <td>adm1@gmail.com</td>
+                        <td>Admin,123456</td>
+                        <td><code>ROLE_ADMIN</code> (administrateur)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div id="login-users-help" class="panel panel-default">
+                <div class="panel-body">
+                    <p>
+                        <span class="label label-success">NOTE :</span>
+                        Si ces utilisateurs ne fonctionnent pas, rechargez les fixtures de l'application en exécutant cette commande depuis le terminal :<br/>
+
+                        <code class="console">$ php bin/console doctrine:fixtures:load</code>
+                    </p>
+
+                    <p>
+                        <span class="label label-success">ASTUCE :</span>
+                        Si vous voulez créer de nouveaux utilisateurs, exécutez cette autre commande :<br/>
+                        <code class="console">$ php bin/console app:add-user</code><br>
+
+                        ou pour un administrateur, exécutez cette autre commande :<br/>
+                        <code class="console">$ php bin/console app:add-user --admin</code>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

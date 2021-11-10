@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le film{% endblock %}
+
+{% block body %}
+    <h1>Modifier le film #{{ movie.id }}</h1>
+
+    <div class="section">
+        <a href="{{ path('admin_movie_show', {id: movie.id}) }}" class="btn btn-lg btn-block btn-success">
+            <i class="fa fa-eye" aria-hidden="true"></i> Voir le détail film
+        </a>
+    </div>
+
+    <div class="section actions">
+        {{ include('admin/movie/_delete_form.html.twig', {movie: movie}, with_context = false) }}
+    </div>
+
+    {{ include('admin/movie/_form.html.twig', {
+        form: form,
+        button_label: 'Enregistrer',
+        include_back_to_home_link: true,
+    }, with_context = false) }}
+{% endblock %}
